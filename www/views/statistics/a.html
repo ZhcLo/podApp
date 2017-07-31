@@ -1,0 +1,37 @@
+<ion-view view-title="统计报表">
+  <ion-content>
+    <ion-refresher pulling-text="下拉刷新" on-refresh="doRefresh()"></ion-refresher>
+    <ion-slide-box style="height: auto">
+      <ion-slide>
+        <ion-list>
+          <ion-item class="item-divider row">
+            <div class="col">所有账单</div>
+          </ion-item>
+          <ion-item class="item-divider row">
+            <div class="col">日期</div>
+            <div class="col">子类</div>
+            <div class="col text-right">金额</div>
+          </ion-item>
+          <ion-item class="row" ng-repeat="row in dataAll">
+            <div class="col">{{ row.date | date :"yyyy-MM-dd" }}</div>
+            <div class="col">{{ classif[row.class][row.subClass] }}</div>
+            <div ng-class="{
+              'positive': row.class,
+              'assertive': !row.class
+            }" class="col text-right">
+              {{ row.value | currency :"" }}
+            </div>
+          </ion-item>
+        </ion-list>
+      </ion-slide>
+      <ion-slide>
+        <highchart config="config"></highchart>
+        <highchart config="config2"></highchart>
+      </ion-slide>
+    </ion-slide-box>
+  </ion-content>
+</ion-view>
+
+
+
+

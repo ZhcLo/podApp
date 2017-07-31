@@ -1,0 +1,93 @@
+<ion-view view-title="日常记账">
+  <ion-content>
+    <ion-refresher pulling-text="下拉刷新" on-refresh="doRefresh()"></ion-refresher>
+    <div class="card">
+      <div class="item item-text-wrap text-center" ng-click="openp()" style="background: #387ef5;color: white">
+        账单日期： <span ng-bind="result.date | date:'yyyy-MM-dd'"></span>
+      </div>
+    </div>
+    <div class="padding">
+      {{ classif[result.class][result.subClass] }}
+    </div>
+    <div class="padding result">
+      <div class="text-right">
+        {{ result.value }}
+      </div>
+    </div>
+    <div class="card">
+      <label class="item item-input">
+        <input type="text" placeholder="备注">
+      </label>
+    </div>
+    <ion-slide-box active-slide="myActiveSlide">
+      <ion-slide>
+        <div class="padding list box">
+          <div>支出类</div>
+          <div ng-repeat="item in classif[0]" class="classMenu" ng-click="selClass(0, $index)" ng-class="{
+            'assertive-bg': result.class == 0 && result.subClass == $index
+          }">
+            {{ item }}
+          </div>
+        </div>
+      </ion-slide>
+      <ion-slide>
+        <div class="padding list box">
+          <div>收入类</div>
+          <div ng-repeat="item in classif[1]" class="classMenu" ng-click="selClass(1, $index)" ng-class="{
+            'positive-bg': result.class == 1 && result.subClass == $index
+          }">
+            {{ item }}
+          </div>
+        </div>
+      </ion-slide>
+    </ion-slide-box>
+    <div class="row">
+      <button class="col text-center" ng-click="clickNum('1')">1</button>
+      <button class="col text-center" ng-click="clickNum('2')">2</button>
+      <button class="col text-center" ng-click="clickNum('3')">3</button>
+      <button class="col text-center"  ng-click="clickB('clear')">
+        清除
+      </button>
+    </div>
+    <div class="row">
+      <button class="col text-center" ng-click="clickNum('4')">4</button>
+      <button class="col text-center" ng-click="clickNum('5')">5</button>
+      <button class="col text-center" ng-click="clickNum('6')">6</button>
+      <button class="col text-center" ng-click="clickB('del')">
+        <i class="ion-backspace-outline"></i>
+      </button>
+    </div>
+    <div class="row">
+      <button class="col text-center" ng-click="clickNum('7')">7</button>
+      <button class="col text-center" ng-click="clickNum('8')">8</button>
+      <button class="col text-center" ng-click="clickNum('9')">9</button>
+      <button class="col text-center" ng-click="clickB('yes')">
+        保存
+      </button>
+    </div>
+    <div class="row">
+      <button class="col text-center" ng-click="clickNum('00')">00</button>
+      <button class="col text-center" ng-click="clickNum('0')">0</button>
+      <button class="col text-center" ng-click="clickNum('.')">.</button>
+      <button class="col text-center" ng-click="clickB('ok')">确定</button>
+    </div>
+
+    <ion-list>
+      <ion-item class="item-divider row">
+        <div class="col">当月结账日</div>
+        <div class="col">收支子类</div>
+        <div class="col text-right">金额</div>
+      </ion-item>
+      <ion-item ng-repeat="row in data | orderBy :'-date'"class="item-divider row light-bg">
+        <div class="col">{{ row.date | date :"yyyy-MM-dd" }}</div>
+        <div class="col">{{ classif[row.class][row.subClass] }}</div>
+        <div ng-class="{
+          'positive': row.class,
+          'assertive': !row.class
+        }" class="col text-right">
+          {{ row.value | currency :"" }}
+        </div>
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-view>
