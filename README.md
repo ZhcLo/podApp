@@ -1,3 +1,3 @@
 # bookkeeping-app
 
-一个使用angular写的记账app，使用cordova打包
+一个使用ionic写的记账app，使用cordova打包
